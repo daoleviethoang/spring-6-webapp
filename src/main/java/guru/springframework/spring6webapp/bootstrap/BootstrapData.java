@@ -60,16 +60,21 @@ public class BootstrapData implements CommandLineRunner {
         Book noEJBSaved = bookRepository.save(noEJB);
         
         // create relationship
+        dddSaved.setPublisher(udemySaved);
+        noEJBSaved.setPublisher(udemySaved);
         udemySaved.getBooks().add(dddSaved);
         udemySaved.getBooks().add(noEJBSaved);
         
         ericSaved.getBooks().add(dddSaved);
         rodSaved.getBooks().add(noEJBSaved);
+        dddSaved.getAuthors().add(ericSaved);
+        noEJBSaved.getAuthors().add(rodSaved);
         
         // save relationship to DB (persistence)
         authorRepository.save(ericSaved);
         authorRepository.save(rodSaved);
-        publisherRepository.save(udemySaved);
+        bookRepository.save(dddSaved);
+        bookRepository.save(noEJBSaved);
         
         System.out.println("In Bootstrap");
         System.out.println("Author Count: " + authorRepository.count());
